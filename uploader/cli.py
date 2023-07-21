@@ -5,8 +5,8 @@ CLI is a controller for the command line use of this library
 from argparse import ArgumentParser
 from os.path import exists, join
 
-from tiktok_uploader.upload import upload_video
-from tiktok_uploader.auth import login_accounts, save_cookies
+from upload import upload_video
+from auth import login_accounts, save_cookies
 
 def main():
     """

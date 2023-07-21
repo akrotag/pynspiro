@@ -1,6 +1,6 @@
 """TikTok-Uploader entry point script"""
 
-from tiktok_uploader import cli
+from . import cli
 
 def main():
 	"""

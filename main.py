@@ -8,8 +8,8 @@ import librosa
 import os
 from PIL import Image
 import random
-
-
+from uploader.upload import upload_video
+import json
 
 
 VOICE_EN = "en-US-ChristopherNeural"
@@ -69,19 +69,23 @@ def create_video(text, voice, output_dir):
     files.append(i2)
     combined = CompositeVideoClip([cropped_clip, txt_clip])
     combined.audio = audio
-    combined.write_videofile(find_filename(output_dir, "mp4"))
+    video_filename = find_filename(output_dir, "mp4")
+    combined.write_videofile(video_filename)
     cropped_clip.close()
     txt_clip.close()
     combined.close()
     
-    return
+    return video_filename
 
 
 
 sentences = generate_sentences()
 
 for s in sentences:
-    create_video(s, VOICE_EN, "output/video/en")
+    #vid = create_video(s, VOICE_EN, "output/video/en")
+    vid = 'output/video/en/010.mp4'
+    upload_video(filename=vid, description="Don't forget to follow for more #motivation #inspiration", cookies="src/cookies.txt")
+    os.remove(vid)
 
 #create_video("Le succès n'est pas la clé du bonheur. Le bonheur est la clé du succès. Si vous aimez ce que vous faites, vous réussirez.", VOICE_FR, "output/video/fr")
 clear()

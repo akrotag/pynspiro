@@ -7,9 +7,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from tiktok_uploader import config, logger
-from tiktok_uploader.browsers import get_browser
-from tiktok_uploader.utils import green
+from . import config, logger
+from .browsers import get_browser
+from .utils import green
 
 class AuthBackend:
     """
@@ -102,7 +102,7 @@ class AuthBackend:
                 'domain': split[0],
                 'path': split[2],
             })
-
+            
             if split[4]:
                 return_cookies[-1]['expiry'] = split[4]
         return return_cookies
