@@ -16,137 +16,147 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from selenium.webdriver.edge.service import Service as EdgeService
+import chromedriver_autoinstaller
 
 from selenium import webdriver
 
 from . import config, logger
 
 
-def get_browser(name: str = 'chrome', options=None, *args, **kwargs) -> webdriver:
-    """
+def get_browser(name: str = 'chrome',
+                options=None,
+                *args,
+                **kwargs) -> webdriver:
+  """
     Gets a browser based on the name with the ability to pass in additional arguments
     """
 
-    # get the web driver for the browser
-    driver_to_use = get_driver(name=name, *args, **kwargs)
+  # get the web driver for the browser
+  driver_to_use = get_driver(name=name, *args, **kwargs)
 
-    # gets the options for the browser
+  # gets the options for the browser
 
-    options = options or get_default_options(name=name, *args, **kwargs)
+  options = options or get_default_options(name=name, *args, **kwargs)
 
-    # combines them together into a completed driver
-    service = get_service(name=name)
-    if service:
-        driver = driver_to_use(service=service, options=options)
-    else:
-        driver = driver_to_use(options=options)
+  # combines them together into a completed driver
+  service = get_service(name=name)
+  if service:
+    driver = driver_to_use(service=service, options=options)
+  else:
+    driver = driver_to_use(options=options)
 
-    driver.implicitly_wait(config['implicit_wait'])
+  driver.implicitly_wait(config['implicit_wait'])
 
-    return driver
+  return driver
 
 
 def get_driver(name: str = 'chrome', *args, **kwargs) -> webdriver:
-    """
+  """
     Gets the web driver function for the browser
     """
-    if _clean_name(name) in drivers:
-        return drivers[name]
+  if _clean_name(name) in drivers:
+    return drivers[name]
 
-    raise UnsupportedBrowserException()
+  raise UnsupportedBrowserException()
 
 
 def get_service(name: str = 'chrome'):
-    """
+  """
     Gets a service to install the browser driver per webdriver-manager docs
 
     https://pypi.org/project/webdriver-manager/
     """
-    if _clean_name(name) in services:
-        return services[name]()
+  if _clean_name(name) in services:
+    return services[name]()
 
-    return None # Safari doesn't need a service
+  return None  # Safari doesn't need a service
 
 
 def get_default_options(name: str, *args, **kwargs):
-    """
+  """
     Gets the default options for each browser to help remain undetected
     """
-    name = _clean_name(name)
+  name = _clean_name(name)
 
-    if name in defaults:
-        return defaults[name](*args, **kwargs)
+  if name in defaults:
+    return defaults[name](*args, **kwargs)
 
-    raise UnsupportedBrowserException()
+  raise UnsupportedBrowserException()
 
 
 def chrome_defaults(*args, headless: bool = False, **kwargs) -> ChromeOptions:
-    """
+  """
     Creates Chrome with Options
     """
 
-    options = ChromeOptions()
+  options = ChromeOptions()
 
-    ## regular
-    options.add_argument('--disable-blink-features=AutomationControlled')
-    options.add_argument('--profile-directory=Default')
+  ## regular
+  options.add_argument('--disable-blink-features=AutomationControlled')
+  options.add_argument('--profile-directory=Default')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-dev-shm-usage')
 
-    ## experimental
-    options.add_experimental_option('excludeSwitches', ['enable-automation'])
-    options.add_experimental_option('useAutomationExtension', False)
+  ## experimental
+  options.add_experimental_option('excludeSwitches', ['enable-automation'])
+  options.add_experimental_option('useAutomationExtension', False)
 
-    # headless
-    if headless:
-        options.add_argument('--headless=new')
+  # headless
+  headless = True
+  if headless:
+    options.add_argument('--headless=new')
 
-    return options
+  return options
 
 
-def firefox_defaults(*args, headless: bool = False, **kwargs) -> FirefoxOptions:
-    """
+def firefox_defaults(*args,
+                     headless: bool = False,
+                     **kwargs) -> FirefoxOptions:
+  """
     Creates Firefox with default options
     """
 
-    options = FirefoxOptions()
+  options = FirefoxOptions()
 
-    # default options
+  # default options
 
-    if headless:
-        options.add_argument('--headless')
+  if headless:
+    options.add_argument('--headless')
 
-    return options
+  return options
 
 
 def safari_defaults(*args, headless: bool = False, **kwargs) -> SafariOptions:
-    """
+  """
     Creates Safari with default options
     """
-    options = SafariOptions()
+  options = SafariOptions()
 
-    # default options
+  # default options
 
-    if headless:
-        options.add_argument('--headless')
+  if headless:
+    options.add_argument('--headless')
 
-    return options
+  return options
 
 
 def edge_defaults(*args, headless: bool = False, **kwargs) -> EdgeOptions:
-    """
+  """
     Creates Edge with default options
     """
-    options = EdgeOptions()
+  options = EdgeOptions()
 
-    # default options
+  # default options
 
-    if headless:
-        options.add_argument('--headless')
+  if headless:
+    options.add_argument('--headless')
 
-    return options
+  return options
+
 
 # Misc
 class UnsupportedBrowserException(Exception):
-    """
+  """
     Browser is not supported by the library
 
     Supported browsers are:
@@ -156,15 +166,15 @@ class UnsupportedBrowserException(Exception):
         - Edge
     """
 
-    def __init__(self, message=None):
-        super().__init__(message or self.__doc__)
+  def __init__(self, message=None):
+    super().__init__(message or self.__doc__)
 
 
 def _clean_name(name: str) -> str:
-    """
+  """
     Cleans the name of the browser to make it easier to use
     """
-    return name.strip().lower()
+  return name.strip().lower()
 
 
 drivers = {
@@ -181,9 +191,9 @@ defaults = {
     'edge': edge_defaults,
 }
 
-
+chromedriver_autoinstaller.install()
 services = {
-    'chrome': lambda : ChromeService(ChromeDriverManager().install()),
-    'firefox': lambda : FirefoxService(GeckoDriverManager().install()),
-    'edge': lambda : EdgeService(EdgeChromiumDriverManager().install()),
+    'chrome': lambda: ChromeService(),
+    'firefox': lambda: FirefoxService(GeckoDriverManager().install()),
+    'edge': lambda: EdgeService(EdgeChromiumDriverManager().install()),
 }

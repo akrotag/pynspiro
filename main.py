@@ -40,7 +40,7 @@ def create_text_img(text, crop_width, h, duration):
     return txt_clip, txt_img_cropped_loc, txt_img_uncropped
 
 def clear():
-    locs = ("output/audio/", "output/png/", "src/videos/")
+    locs = ("output/video/en/", "output/audio/", "output/png/", "src/videos/")
     for l in locs:
         for f in os.listdir(l):
             os.remove(f"{l}{f}")
@@ -49,7 +49,7 @@ def create_video(text, voice, output_dir):
     files = []
     audio_loc = create_audio(text, voice)
     files.append(audio_loc)
-    duration = librosa.get_duration(filename=audio_loc)
+    duration = librosa.get_duration(path=audio_loc)
 
     video_location = download_random_video()
     files.append(video_location)
@@ -78,15 +78,15 @@ def create_video(text, voice, output_dir):
     
     return video_filename
 
+
 keep_alive()
+time.sleep(108000)
 
 while True:
     sentences = generate_sentences()
     for s in sentences:
         vid = create_video(s, VOICE_EN, "output/video/en")
         upload_video(filename=vid, description="Don't forget to follow for more #motivation #inspiration", cookies="src/cookies.txt")
-        os.remove(vid)
+        clear()
         time.sleep(random.randint(30000, 40000))
 
-#create_video("Le succès n'est pas la clé du bonheur. Le bonheur est la clé du succès. Si vous aimez ce que vous faites, vous réussirez.", VOICE_FR, "output/video/fr")
-clear()
