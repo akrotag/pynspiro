@@ -5,11 +5,12 @@ from videos import download_random_video
 from moviepy.editor import VideoFileClip, concatenate_videoclips, TextClip, CompositeVideoClip, ColorClip, ImageClip, AudioFileClip
 from moviepy.video.fx.all import crop
 import librosa
+import time
 import os
 from PIL import Image
-import random
 from uploader.upload import upload_video
-import json
+import random
+from keep_alive import keep_alive
 
 
 VOICE_EN = "en-US-ChristopherNeural"
@@ -77,15 +78,15 @@ def create_video(text, voice, output_dir):
     
     return video_filename
 
+keep_alive()
 
-
-sentences = generate_sentences()
-
-for s in sentences:
-    #vid = create_video(s, VOICE_EN, "output/video/en")
-    vid = 'output/video/en/010.mp4'
-    upload_video(filename=vid, description="Don't forget to follow for more #motivation #inspiration", cookies="src/cookies.txt")
-    os.remove(vid)
+while True:
+    sentences = generate_sentences()
+    for s in sentences:
+        vid = create_video(s, VOICE_EN, "output/video/en")
+        upload_video(filename=vid, description="Don't forget to follow for more #motivation #inspiration", cookies="src/cookies.txt")
+        os.remove(vid)
+        time.sleep(random.randint(30000, 40000))
 
 #create_video("Le succès n'est pas la clé du bonheur. Le bonheur est la clé du succès. Si vous aimez ce que vous faites, vous réussirez.", VOICE_FR, "output/video/fr")
 clear()
