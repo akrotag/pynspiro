@@ -10,14 +10,22 @@ jobs:
 
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content to github runner
-
-      - name: install imagemagick
-        run: sudo apt install imagemagick
-
-      - name: change IM rights 1
-        run:   cat /etc/ImageMagick-6/policy.xml | sed 's/none/read|write/g' | sudo tee /etc/ImageMagick-6/policy.xml
-
-
+      
+      
+      - name: Configure ImageMagick policy
+        run: |
+          cat /etc/ImageMagick-6/policy.xml \
+          | sed 's/none/read,write/g' \
+          | sudo tee /etc/ImageMagick-6/policy.xml
+      - name: PyTest
+        run: |
+          python -m pytest --doctest-glob "moviepy/**/**.py" --cov moviepy --cov-report term-missing
+      - name: Test pip installation
+        run: |
+          pip install -e .
+          pip install -e .[optional]
+          pip install -e .[test]
+          pip install -e .[doc]
 
       - name: setup python
         uses: actions/setup-python@v4
