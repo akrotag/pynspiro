@@ -11,13 +11,10 @@ jobs:
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content to github runner
 
-      - name: install imagemagick
-        run: sudo apt install imagemagick
-
       - name: change ImageMagick rights
         run:   cat /etc/ImageMagick-6/policy.xml | sed 's/none/read,write/g' | sudo tee /etc/ImageMagick-6/policy.xml
 
-        
+
       - name: setup python
         uses: actions/setup-python@v4
         with:
