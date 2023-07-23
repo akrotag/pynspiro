@@ -7,8 +7,6 @@ jobs:
     steps:
       - run: echo "🎶 Creating and Uploading video."
       
-      
       - name: cat
-       run: ls /etc/
-
+        run: ls /etc/ 
       
