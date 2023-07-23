@@ -18,7 +18,7 @@ async def save_voice(text, voice) -> None:
 
 
 def create_audio(text, voice):
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    #asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     out = asyncio.run(save_voice(text, voice))
     """loop = asyncio.get_event_loop_policy().get_event_loop()
     try:

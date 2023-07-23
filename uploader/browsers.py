@@ -191,7 +191,7 @@ defaults = {
     'edge': edge_defaults,
 }
 
-chromedriver_autoinstaller.install()
+#chromedriver_autoinstaller.install()
 services = {
     'chrome': lambda: ChromeService(),
     'firefox': lambda: FirefoxService(GeckoDriverManager().install()),

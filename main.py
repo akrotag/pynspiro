@@ -78,15 +78,11 @@ def create_video(text, voice, output_dir):
     
     return video_filename
 
+clear()
+#keep_alive()
 
-keep_alive()
-time.sleep(108000)
 
-while True:
-    sentences = generate_sentences()
-    for s in sentences:
-        vid = create_video(s, VOICE_EN, "output/video/en")
-        upload_video(filename=vid, description="Don't forget to follow for more #motivation #inspiration", cookies="src/cookies.txt")
-        clear()
-        time.sleep(random.randint(30000, 40000))
-
+sentences = generate_sentences()
+for s in sentences:
+    vid = create_video(s, VOICE_EN, "output/video/en")
+    upload_video(filename=vid, description="Don't forget to follow for more #motivation #inspiration", cookies="src/cookies.txt")
