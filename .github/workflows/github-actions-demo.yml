@@ -6,5 +6,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎶 Creating and Uploading video."
+      
+      
       - name: cat
-      - run: ls /etc/
+       run: ls /etc/
+
+      
