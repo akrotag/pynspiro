@@ -24,8 +24,6 @@ jobs:
           | sed 's/none/read,write/g' \
           | sudo tee /etc/ImageMagick-6/policy.xml
 
-      - name: create alias
-        run: alias magick="convert"
 
       - name: setup python
         uses: actions/setup-python@v4
@@ -37,5 +35,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           
+      - name: locate movie
+        run: |
+        cat /opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/moviepy/config_default.py
+        type magick
+
       - name: execute py script # run main.py
         run: python main.py
