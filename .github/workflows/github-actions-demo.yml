@@ -16,8 +16,8 @@ jobs:
 
       - name: IM location
         run: |
-          type magick
           type convert
+          type magick
 
 
       - name: Configure ImageMagick policy
