@@ -12,6 +12,12 @@ jobs:
         uses: actions/checkout@v2 # checkout the repository content to github runner
       
       
+      - name: IM location
+        run: |
+          type magick
+          type convert
+
+
       - name: Configure ImageMagick policy
         run: |
           cat /etc/ImageMagick-6/policy.xml \
