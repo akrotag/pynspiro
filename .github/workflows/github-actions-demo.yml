@@ -10,7 +10,10 @@ jobs:
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content to github runner
 
-        
+      - name: install imagemagick
+        run: sudo apt install imagemagick
+
+
       - name: setup python
         uses: actions/setup-python@v4
         with:
