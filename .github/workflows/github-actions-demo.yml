@@ -39,7 +39,10 @@ jobs:
         run: cat /opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/moviepy/config_defaults.py
 
       - name: Replace location
-        run: sed "s/os.getenv('IMAGEMAGICK_BINARY', 'auto-detect')/'usr/bin/convert'/g"        
+        run: | 
+          cat /opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/moviepy/config_defaults.py \
+          | sed "s/os.getenv('IMAGEMAGICK_BINARY', 'auto-detect')/'usr/bin/convert'/g" \
+          | sudo tee /opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/moviepy/config_defaults.py        
 
       - name: execute py script # run main.py
         run: python main.py
