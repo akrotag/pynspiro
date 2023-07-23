@@ -36,9 +36,8 @@ jobs:
           pip install -r requirements.txt
           
       - name: locate movie
-        run: |
-        ls /opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/moviepy/
-        type magick
+        run: cat /opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/moviepy/config_default.py
+        
 
       - name: execute py script # run main.py
         run: python main.py
