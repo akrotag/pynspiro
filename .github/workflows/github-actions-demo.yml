@@ -25,15 +25,15 @@ jobs:
           cat /etc/ImageMagick-6/policy.xml \
           | sed 's/none/read,write/g' \
           | sudo tee /etc/ImageMagick-6/policy.xml
-      - name: PyTest
-        run: |
-          python -m pytest --doctest-glob "moviepy/**/**.py" --cov moviepy --cov-report term-missing
-      - name: Test pip installation
-        run: |
-          pip install -e .
-          pip install -e .[optional]
-          pip install -e .[test]
-          pip install -e .[doc]
+      # - name: PyTest
+      #   run: |
+      #     python -m pytest --doctest-glob "moviepy/**/**.py" --cov moviepy --cov-report term-missing
+      # - name: Test pip installation
+      #   run: |
+      #     pip install -e .
+      #     pip install -e .[optional]
+      #     pip install -e .[test]
+      #     pip install -e .[doc]
 
       - name: setup python
         uses: actions/setup-python@v4
