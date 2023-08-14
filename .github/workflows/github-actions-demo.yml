@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
   Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - run: echo "🎶 Creating and Uploading video."
       
@@ -11,18 +11,18 @@ jobs:
       - name: checkout repo content
         uses: actions/checkout@v2 # checkout the repository content to github runner
       
-      - name: ImageMagick Installation
-        run: sudo apt install imagemagick
+      # - name: ImageMagick Installation
+      #   run: sudo apt install imagemagick
 
-      - name: IM location
-        run: type convert
+      # - name: IM location
+      #   run: type convert
 
 
-      - name: Configure ImageMagick policy
-        run: |
-          cat /etc/ImageMagick-6/policy.xml \
-          | sed 's/none/read,write/g' \
-          | sudo tee /etc/ImageMagick-6/policy.xml
+      # - name: Configure ImageMagick policy
+      #   run: |
+      #     cat /etc/ImageMagick-6/policy.xml \
+      #     | sed 's/none/read,write/g' \
+      #     | sudo tee /etc/ImageMagick-6/policy.xml
 
 
       - name: setup python
@@ -35,14 +35,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           
-      - name: locate movie
-        run: cat /opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/moviepy/config_defaults.py
+      # - name: locate movie
+      #   run: cat /opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/moviepy/config_defaults.py
 
-      - name: Replace location
-        run: | 
-          cat /opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/moviepy/config_defaults.py \
-          | sed "s@os.getenv('IMAGEMAGICK_BINARY', 'auto-detect')@'usr/bin/convert'@g" \
-          | sudo tee /opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/moviepy/config_defaults.py        
+      # - name: Replace location
+      #   run: | 
+      #     cat /opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/moviepy/config_defaults.py \
+      #     | sed "s@os.getenv('IMAGEMAGICK_BINARY', 'auto-detect')@'usr/bin/convert'@g" \
+      #     | sudo tee /opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/moviepy/config_defaults.py        
 
       - name: execute py script # run main.py
         run: python main.py
