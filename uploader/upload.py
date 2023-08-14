@@ -118,7 +118,7 @@ def upload_videos(videos: list = None, auth: AuthBackend = None, browser='chrome
                                  num_retires = num_retires, headless=headless, 
                                  *args, **kwargs)
         except Exception as exception:
-            logger.error('Failed to upload %s', path)
+            logger.error(f'Failed to upload {path} because {exception}')
             logger.error(exception)
             failed.append(video)
 

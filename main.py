@@ -82,7 +82,7 @@ clear()
 #keep_alive()
 
 
-sentences = generate_sentences()
-for s in sentences:
-    vid = create_video(s, VOICE_EN, "output/video/en")
-    upload_video(filename=vid, description="Don't forget to follow for more #motivation #inspiration", cookies="src/cookies.txt")
+s = generate_sentences()[1]
+
+vid = create_video(s, VOICE_EN, "output/video/en")
+upload_video(filename=vid, description="Don't forget to follow for more #motivation #inspiration", cookies="src/cookies.txt")
