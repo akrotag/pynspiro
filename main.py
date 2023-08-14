@@ -43,7 +43,8 @@ def clear():
     locs = ("output/video/en/", "output/audio/", "output/png/", "src/videos/")
     for l in locs:
         for f in os.listdir(l):
-            os.remove(f"{l}{f}")
+            if f != "c.txt":
+                os.remove(f"{l}{f}")
 
 def create_video(text, voice, output_dir):
     files = []
