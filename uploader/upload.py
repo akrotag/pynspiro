@@ -352,9 +352,9 @@ def _post_video(driver) -> None:
     driver : selenium.webdriver
     """
     logger.debug(green('Clicking the post button'))
-
-    post = driver.find_element(By.XPATH, config['selectors']['upload']['post'])
-    post.click()
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    post = WebDriverWait(driver, 600).until(By.XPATH, config['selectors']['upload']['post'])
+    driver.find_element(By.XPATH, config['selectors']['upload']['post']).click()
 
     # waits for the video to upload
     post_confirmation = EC.presence_of_element_located(
