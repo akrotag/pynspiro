@@ -10,6 +10,7 @@ import os
 from PIL import Image
 from uploader.upload import upload_video
 import random
+import subprocess
 from keep_alive import keep_alive
 
 
@@ -81,9 +82,14 @@ def create_video(text, voice, output_dir):
 
 clear()
 #keep_alive()
+for i in range(2):
+    s = generate_sentences()
+    create_video(s[0], VOICE_EN, "output/video/en")
+    create_video(s[1], VOICE_EN, "output/video/en")
+    create_video(s[2], VOICE_EN, "output/video/en")
+    s = generate_sentences()
+    create_video(s[0], VOICE_EN, "output/video/en")
+    create_video(s[1], VOICE_EN, "output/video/en")
 
 
-s = generate_sentences()[1]
-
-vid = create_video(s, VOICE_EN, "output/video/en")
-upload_video(filename=vid, description="Don't forget to follow for more #motivation #inspiration", cookies="src/cookies.txt")
+os.system('explorer "output\\video\\en"')
