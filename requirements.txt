@@ -1,0 +1,5 @@
+edge_tts==6.1.7
+librosa==0.10.0.post2
+moviepy==1.0.3
+Pillow==10.2.0
+Requests==2.31.0
