@@ -30,3 +30,6 @@ The script will generate 3 videos each time it is launched, videos can be found 
 
 [004 (video-converter.com).webm](https://github.com/akrotag/pynspiro/assets/91624992/47f44bbd-2adf-4bf4-a076-68ef5dea989a)
 
+
+### Developer's note
+The commit history was deleted on 17/02/2024 to hide cookie files that where previously on the repo
